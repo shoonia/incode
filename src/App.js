@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import CardsList from './components/cards/CardsList';
+import Profile from './components/profile/Profile';
 
 const URL = 'https://raw.githubusercontent.com/shoonia/incode/master/__task__/clients.json';
 
@@ -41,6 +42,11 @@ class App extends Component {
     });
   };
 
+  isEmptyObject (obj) {
+    for (let key in obj) return false;
+    return true;
+  }
+
   render() {
     const {clients, value, currentCard} = this.state;
     const clientsFilter = (value.trim() === '') ? clients : this.searchfilter(clients, value);
@@ -58,10 +64,16 @@ class App extends Component {
                   placeholder="search"
                 />
               </div>
-              <CardsList clients={clientsFilter} onClick={this.handleClick} />
+              <CardsList
+                clients={clientsFilter}
+                onClick={this.handleClick}
+              />
             </div>
             <div className="col-8">
-              { JSON.stringify(currentCard) }
+              { this.isEmptyObject(currentCard)
+                ? null
+                : <Profile {...currentCard} />
+              }
             </div>
           </div>
       </div>
