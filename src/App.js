@@ -6,7 +6,8 @@ const URL = 'https://raw.githubusercontent.com/shoonia/incode/master/__task__/cl
 
 class App extends Component {
   state = {
-    clients: []
+    clients: [],
+    value: ''
   }
 
   componentDidMount () {
@@ -19,17 +20,40 @@ class App extends Component {
       });
   }
 
+  handleOnChange = ({ target }) => {
+    this.setState({ value: target.value });
+  };
+
+  searchfilter = (clients, value) => {
+    const pattern = value.toLowerCase();
+    return clients.filter(item => {
+      const elem1 = Object.keys(item);
+      return elem1.some(subItem => {
+        return Object.values(item[subItem]).some(str => {
+          return str.toLowerCase().includes(pattern);
+        });
+      });
+    });
+  };
+
   render() {
-    const {clients} = this.state;
+    const {clients, value} = this.state;
+    const clientsFilter = (value.trim() === '') ? clients : this.searchfilter(clients, value);
 
     return (
       <div className="container mt-3">
           <div className="row">
             <div className="col-4">
               <div className="mb-3">
-                <input type="text" className="form-control" />
+                <input
+                  type="text"
+                  value={value}
+                  onChange={this.handleOnChange}
+                  className="form-control"
+                  placeholder="search"
+                />
               </div>
-              <CardsList clients={clients} />
+              <CardsList clients={clientsFilter} />
             </div>
             <div className="col-8">block</div>
           </div>
