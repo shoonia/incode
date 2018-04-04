@@ -55,7 +55,7 @@ class App extends Component {
       <div className="container mt-3">
           <div className="row">
             <div className="col-4">
-              <div className="mb-3">
+              <div className="mb-3 pt-3 pb-3 sticky-top">
                 <input
                   type="text"
                   value={value}
