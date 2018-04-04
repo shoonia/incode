@@ -52,7 +52,7 @@ class App extends Component {
     const clientsFilter = (value.trim() === '') ? clients : this.searchfilter(clients, value);
 
     return (
-      <div className="container mt-3">
+      <article className="container mt-3">
           <div className="row">
             <div className="col-4">
               <div className="mb-3 pt-3 pb-3 sticky-top">
@@ -62,6 +62,7 @@ class App extends Component {
                   onChange={this.handleOnChange}
                   className="form-control"
                   placeholder="search"
+                  autoFocus
                 />
               </div>
               <CardsList
@@ -71,12 +72,12 @@ class App extends Component {
             </div>
             <div className="col-8">
               { this.isEmptyObject(currentCard)
-                ? null
+                ? <span className="text-muted mt-1">Profile</span>
                 : <Profile {...currentCard} />
               }
             </div>
           </div>
-      </div>
+      </article>
     );
   }
 }
