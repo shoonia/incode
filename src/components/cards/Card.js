@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Card = ({ general, job }) => (
-  <div className="card mb-2">
+const Card = ({ general, job, onClick }) => (
+  <div className="card mb-2" onClick={onClick}>
     <div className="card-body">
       <div className="media">
         <img className="mr-3" src={general.avatar} alt="avatar" width="50" height="50" />

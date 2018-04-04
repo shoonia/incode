@@ -7,7 +7,8 @@ const URL = 'https://raw.githubusercontent.com/shoonia/incode/master/__task__/cl
 class App extends Component {
   state = {
     clients: [],
-    value: ''
+    value: '',
+    currentCard: {}
   }
 
   componentDidMount () {
@@ -24,11 +25,15 @@ class App extends Component {
     this.setState({ value: target.value });
   };
 
+  handleClick = currentCard => {
+    this.setState({ currentCard })
+  };
+
   searchfilter = (clients, value) => {
     const pattern = value.toLowerCase();
     return clients.filter(item => {
-      const elem1 = Object.keys(item);
-      return elem1.some(subItem => {
+      const keys= Object.keys(item);
+      return keys.some(subItem => {
         return Object.values(item[subItem]).some(str => {
           return str.toLowerCase().includes(pattern);
         });
@@ -37,7 +42,7 @@ class App extends Component {
   };
 
   render() {
-    const {clients, value} = this.state;
+    const {clients, value, currentCard} = this.state;
     const clientsFilter = (value.trim() === '') ? clients : this.searchfilter(clients, value);
 
     return (
@@ -53,9 +58,11 @@ class App extends Component {
                   placeholder="search"
                 />
               </div>
-              <CardsList clients={clientsFilter} />
+              <CardsList clients={clientsFilter} onClick={this.handleClick} />
             </div>
-            <div className="col-8">block</div>
+            <div className="col-8">
+              { JSON.stringify(currentCard) }
+            </div>
           </div>
       </div>
     );
