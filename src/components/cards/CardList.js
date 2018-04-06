@@ -2,10 +2,10 @@ import React from 'react';
 
 import Card from './Card';
 
-const CardsList = ({clients, onClick}) => {
+const CardList = ({clients, onClick}) => {
   return clients.map((item, i) => {
     return <Card
-        key={i}
+        key={item.contact.email}
         general={item.general}
         job={item.job}
         onClick={() => onClick(item)}
@@ -13,4 +13,4 @@ const CardsList = ({clients, onClick}) => {
   });
 }
 
-export default CardsList;
+export default CardList;

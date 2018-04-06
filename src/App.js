@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import CardsList from './components/cards/CardsList';
+import CardList from './components/cards/CardList';
 import Profile from './components/profile/Profile';
 
 const URL = 'https://raw.githubusercontent.com/shoonia/incode/master/__task__/clients.json';
 
 class App extends Component {
   state = {
-    clients: [],
     value: '',
-    currentCard: {}
+    clients: [],
+    currentCard: null
   }
 
   componentDidMount () {
@@ -30,13 +30,13 @@ class App extends Component {
     this.setState({ currentCard })
   };
 
-  searchfilter = (clients, value) => {
-    const pattern = value.toLowerCase();
+  searchFilter = (clients, value) => {
+    const substring = value.toLowerCase();
     return clients.filter(item => {
-      const keys= Object.keys(item);
+      const keys = Object.keys(item);
       return keys.some(subItem => {
-        return Object.values(item[subItem]).some(str => {
-          return str.toLowerCase().includes(pattern);
+        return Object.values(item[subItem]).some(string => {
+          return string.toLowerCase().includes(substring);
         });
       });
     });
@@ -49,35 +49,37 @@ class App extends Component {
 
   render() {
     const {clients, value, currentCard} = this.state;
-    const clientsFilter = (value.trim() === '') ? clients : this.searchfilter(clients, value);
+    const clientList = (value.trim() === '') ? clients : this.searchFilter(clients, value);
 
     return (
-      <article className="container mt-3">
-          <div className="row">
-            <div className="col-4">
-              <div className="mb-3 pt-3 pb-3 sticky-top">
-                <input
-                  type="text"
-                  value={value}
-                  onChange={this.handleOnChange}
-                  className="form-control"
-                  placeholder="search"
-                  autoFocus
-                />
-              </div>
-              <CardsList
-                clients={clientsFilter}
-                onClick={this.handleClick}
+      <div className="container mt-3">
+        <div className="row">
+          <div className="col-4">
+            <div className="mb-3 pt-3 pb-3 sticky-top">
+              <input
+                type="text"
+                value={value}
+                onChange={this.handleOnChange}
+                className="form-control"
+                placeholder="search"
+                autoFocus
               />
             </div>
-            <div className="col-8">
+            <CardList
+              clients={clientList}
+              onClick={this.handleClick}
+            />
+          </div>
+          <div className="col-8">
+            <div className="sticky-top">
               { this.isEmptyObject(currentCard)
-                ? <span className="text-muted mt-1">Profile</span>
+                ? <div className="text-light display-1">Profile ...</div>
                 : <Profile {...currentCard} />
               }
             </div>
           </div>
-      </article>
+        </div>
+      </div>
     );
   }
 }

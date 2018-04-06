@@ -1,14 +1,14 @@
 import React from 'react';
 
 const Profile = ({general, job, contact, address}) => (
-  <div className="media sticky-top pt-3">
-    <img className="ml-3" src={general.avatar} width="128" height="128" />
+  <div className="media pt-3">
+    <img className="ml-3" src={general.avatar} width="128" height="128" alt="avatar" />
     <div className="media-body ml-5">
       <h3>
         {general.firstName} {general.lastName}
       </h3>
       <p>{job.title} - {job.company}</p>
-      <h5>Contact</h5>
+      <h5>Contacts</h5>
       <ul>
         <li>{contact.email}</li>
         <li>{contact.phone}</li>
